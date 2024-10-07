@@ -1,0 +1,23 @@
+Package: INDExA
+Title: Interval Null Differential EXpression/Abundance
+Version: 0.0.1
+Authors@R: 
+    person("Kyle", "McGovern", , "kyle.mcgovern93@gmail.com", role=c("aut", "cre"))
+Description: What the package does (one paragraph).
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends:
+    R (>= 2.10), 
+    stats
+Suggests:
+    ALDEx2,
+    knitr,
+    rmarkdown,
+    testthat,
+    abind,
+    MASS,
+    BiocStyle
+VignetteBuilder: knitr
+LazyData: true

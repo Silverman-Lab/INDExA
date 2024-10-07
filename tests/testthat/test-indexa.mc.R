@@ -1,0 +1,159 @@
+
+Y1 <- rbind(c(0,0,0,0),
+            c(1,0,1,2),
+            c(2,3,0,5),
+            c(0,0,0,0),
+            c(2,0,0,0))
+Y2 <- Y1
+row.names(Y2) <- c("a", "b", "c", "d", "e")
+
+Y3 <- rbind(c(0,2,0,0,2),
+            c(1,0,1,2,8),
+            c(2,3,0,5,9),
+            c(0,0,0,4,1),
+            c(2,0,0,0,1),
+            c(6,5,2,4,6))
+row.names(Y3) <- c("a", "b", "c", "d", "e", "f")
+colnames(Y3) <- c("s1", "s2", "s3", "s4", "s5")
+
+Y4 <- Y3
+row.names(Y4) <- c("a", "b", "c", "a", "e", "f")
+
+Y5 <- Y3
+colnames(Y5) <- c("s1", "s2", "s4", "s4", "s5")
+
+Y6 <- rbind(c(1e8, 1e8, 1e8),
+            c(5e8, 1e8, 2e8),
+            c(8e8, 1e8, 5e8),
+            c(6e8, 1e8, 2e8))
+row.names(Y6) <- c("a", "b", "c", "d")
+colnames(Y6) <- c("s1", "s2", "s3")
+
+res.1 <- indexa.mc(Y6, mc.samples=100)
+res.2 <- indexa.mc(Y6, mc.samples=100, denom="clr")
+res.3 <- indexa.mc(Y6, mc.samples=100, denom=c(2,4))
+custom.func <- function(dirichlet.samples) {
+    return(matrix(0, nrow=dim(dirichlet.samples)[3], ncol=dim(dirichlet.samples)[2]))
+}
+res.4 <- indexa.mc(Y6, mc.samples=100, custom.scale=custom.func)
+custom.func <- function(dirichlet.samples) {
+    return(-log2(apply(dirichlet.samples, c(3,2), gm.mean)))
+}
+res.5 <- indexa.mc(Y6, mc.samples=100, custom.scale=custom.func)
+
+d.res.1 <- cbind(c(0.05, 0.25, 0.40, 0.30),
+                 c(0.25, 0.25, 0.25, 0.25),
+                 c(0.10, 0.20, 0.50, 0.20))
+e.res.1 <- log2(cbind(c(0.05, 0.25, 0.40, 0.30),
+                      c(0.25, 0.25, 0.25, 0.25),
+                      c(0.10, 0.20, 0.50, 0.20)))
+e.res.2 <- log2(cbind(c(0.05, 0.25, 0.40, 0.30)/prod(c(0.05, 0.25, 0.40, 0.30))^(1/4),
+                      c(0.25, 0.25, 0.25, 0.25)/prod(c(0.25, 0.25, 0.25, 0.25))^(1/4),
+                      c(0.10, 0.20, 0.50, 0.20)/prod(c(0.10, 0.20, 0.50, 0.20))^(1/4)))
+e.res.3 <- log2(cbind(c(0.05, 0.25, 0.40, 0.30)/prod(c(0.25, 0.30))^(1/2),
+                      c(0.25, 0.25, 0.25, 0.25)/prod(c(0.25, 0.25))^(1/2),
+                      c(0.10, 0.20, 0.50, 0.20)/prod(c(0.20, 0.20))^(1/2)))
+
+test_that("test mc sampling function", {
+
+    expect_warning(
+        indexa.mc(Y1),
+        "for better results: 1, 4" 
+    )
+
+    expect_warning(
+        indexa.mc(Y2),
+        "for better results: a, d"
+    )
+
+    expect_warning(
+        indexa.mc(Y3, mc.samples=6),
+        "use at least 100"
+    )
+
+    expect_error(
+        indexa.mc(Y4, mc.samples=100),
+        "duplicate row names"
+    )
+    
+    expect_error(
+        indexa.mc(Y5, mc.samples=100),
+        "duplicate col names"
+    )
+   
+    expect_true(
+        !any(apply(res.1@dirichlet.samples, 3, function(item) abs(item - d.res.1)) > 0.001)
+    )
+
+    expect_true(
+        !any(apply(res.1@log2.norm.samples, 3, function(item) abs(item - e.res.1)) > 0.1)
+    )
+
+    expect_equal(
+        row.names(res.1@dirichlet.samples[,,20]),
+        c("a", "b", "c", "d")
+    )
+    
+    expect_equal(
+        row.names(res.1@log2.norm.samples[,,20]),
+        c("a", "b", "c", "d")
+    )
+    
+    expect_equal(
+        colnames(res.1@dirichlet.samples[,,20]),
+        c("s1", "s2", "s3")
+    )
+    
+    expect_equal(
+        colnames(res.1@log2.norm.samples[,,20]),
+        c("s1", "s2", "s3")
+    )
+    
+    expect_equal(
+        colnames(res.1@scales),
+        c("s1", "s2", "s3")
+    )
+    
+    expect_true(
+        !any(apply(res.2@log2.norm.samples, 3, function(item) abs(item - e.res.2)) > 0.1)
+    )
+
+    expect_true(
+        !any(apply(res.3@log2.norm.samples, 3, function(item) abs(item - e.res.3)) > 0.1)
+    )
+    
+    expect_error(
+        indexa.mc(Y6, mc.samples=100, denom=c("b", "d")),
+        "'denom' must be"
+    )
+    
+    expect_error(
+        indexa.mc(Y6, mc.samples=100, denom="xke"),
+        "'denom' must be"
+    )
+    
+    expect_error(
+        indexa.mc(Y6, mc.samples=100, denom=NULL, custom.scale=NULL),
+        "cannot both be NULL"
+    )
+
+    expect_true(
+        !any(apply(res.4@dirichlet.samples, 3, function(item) abs(item - d.res.1)) > 0.001)
+    )
+
+    expect_true(
+        !any(apply(res.4@log2.norm.samples, 3, function(item) abs(item - e.res.1)) > 0.1)
+    )
+
+    expect_true(
+        !any(apply(res.5@log2.norm.samples, 3, function(item) abs(item - e.res.2)) > 0.1)
+    )
+    
+     expect_error(
+         indexa.mc(Y6, mc.samples=100, denom=NULL,
+                  custom.scale=function(d){return(matrix(0, nrow=100, ncol=67))}),
+         "should return a matrix with"
+    )
+  
+})
+
