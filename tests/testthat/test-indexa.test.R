@@ -1,3 +1,6 @@
+library(ALDEx2)
+library(abind)
+
 set.seed(1)
 D <- 100
 N <- 30

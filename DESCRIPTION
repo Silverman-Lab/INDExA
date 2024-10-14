@@ -1,9 +1,15 @@
 Package: INDExA
 Title: Interval Null Differential EXpression/Abundance
-Version: 0.0.1
+Version: 0.1.0
 Authors@R: 
     person("Kyle", "McGovern", , "kyle.mcgovern93@gmail.com", role=c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: INDExA is a differential abundance/expression tool for the analysis
+             of DNA sequence count data (or potentially other sequence count data).
+	     It is useful for analyzing RNA-seq or 16S rRNA-seq. It allows researchers
+	     to define interval assumptions to account for uncertainty in normalizations
+	     and/or the unmeasured scale. These interval assumptions are integrated into
+	     the null hypothesis testing framework itself through interval null hypothesis
+	     tests.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

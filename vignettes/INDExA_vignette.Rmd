@@ -56,7 +56,7 @@ conds <- c(rep(0, 50), rep(1, 50))
 # Our interval assumption about the change in total microbial load
 epsilon.interval <- c(0, 1.233)
 # Build INDExA Object from MC Sampling
-indexa.obj <- indexa.mc.function(data_sim_1$seq_counts, mc.samples=500)
+indexa.obj <- indexa.mc(data_sim_1$seq_counts, mc.samples=500)
 # Run Interval Null Hypothesis Testing
 indexa.sim.results <- indexa.test(indexa.obj, conds,
                                   epsilon.interval=epsilon.interval)
