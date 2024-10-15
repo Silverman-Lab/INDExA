@@ -72,4 +72,17 @@ indexa.obj <- indexa.mc(data_sim_1$seq_counts, mc.samples=500)
 indexa.sim.results <- indexa.test(indexa.obj, conds,
                                   epsilon.interval=epsilon.interval)
 ```
+## INDExA Output Explained
+
+The matrix returned from `indexa.test` has the following columns:
+
+1. **median.effect**: The median LFC given the choice of normalization. NOTE: this does not account for the interval assumption
+2. **median.effect.l**: The lower bound of the median LFC given the interval assumption (i.e., median.effect+epsilon.lower)
+3. **median.effect.u**: The upper bound of the median LFC given the interval assumption (i.e., median.effect+epsilon.upper)
+4. **ctt.pval**: The p-value for the composite t-test
+5. **cwt.pval**: The p-value for the composite wilcoxon test
+6. **gtt.pval**: The p-value for the generalized t-test
+7. **ctt.pval.BH.adj**: The BH adjusted p-value for the composite t-test
+8. **cwt.pval.BH.adj**: The BH adjusted p-value for the composite t-test
+9. **gtt.pval.BH.adj**: The BH adjusted p-value for the composite t-test
 
