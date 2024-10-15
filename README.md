@@ -30,8 +30,8 @@ pak::pak("kyle-mcgovern/INDExA")
 ```
 ## Example
 
-The following is a basic example analysis
-
+The following is a basic example analysis, the full analysis can be found in
+the vignettes.
 
 Here we analyze simulated data from a mock experiment measuring changes in
 50 microbes' abundance in the colons of 100 individuals. The individuals were
