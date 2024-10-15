@@ -42,7 +42,7 @@ the remaining 20 microbes were simulated with LFC of 0.
 
 Consider, based on prior knowledge, we believe the selective microbial growth
 factor could only increase the total number of microbes in the colons of
-**treated** vs. **untreated** individuals by at most 3 fold (and at least 1
+**treated** vs. **untreated** individuals by at most 2.5 fold (and at least 1
 fold). If we represent the $log_2$ fold change in total colonic microbial
 abundance as the variable $\theta^\perp$, we can represent this (correct)
 interval assumption as:
