@@ -83,6 +83,6 @@ The matrix returned from `indexa.test` has the following columns:
 5. **cwt.pval**: The p-value for the composite wilcoxon test
 6. **gtt.pval**: The p-value for the generalized t-test
 7. **ctt.pval.BH.adj**: The BH adjusted p-value for the composite t-test
-8. **cwt.pval.BH.adj**: The BH adjusted p-value for the composite t-test
-9. **gtt.pval.BH.adj**: The BH adjusted p-value for the composite t-test
+8. **cwt.pval.BH.adj**: The BH adjusted p-value for the composite wilcoxon test
+9. **gtt.pval.BH.adj**: The BH adjusted p-value for the generalized t-test
 
