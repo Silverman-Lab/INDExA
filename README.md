@@ -26,7 +26,7 @@ You can install the development version of INDExA from [GitHub](https://github.c
 
 ``` r
 # install.packages("pak")
-pak::pak("kyle-mcgovern/INDExA")
+pak::pak("Silverman-Lab/INDExA")
 ```
 ## Example
 
