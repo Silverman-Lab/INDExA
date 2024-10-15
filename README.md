@@ -46,13 +46,15 @@ factor could only increase the total number of microbes in the colons of
 fold). If we represent the $log_2$ fold change in total colonic microbial
 abundance as the variable $\theta^\perp$, we can represent this (correct)
 interval assumption as:
+
 $$
 \begin{align*}
-  \theta^\perp &\in [\log_2(1), \log_2(3)] \\
-  \theta^\perp &\in [0, 1.585].
+  \theta^\perp &\in [\log_2(1), \log_2(2.5)] \\
+  \theta^\perp &\in [0, 1.322].
 \end{align*}
 $$
-(**NOTE:** In this sim the true $\theta^\perp=1.12$)
+
+(**NOTE:** In this sim the true $\theta^\perp=1.195$)
 
 Using this interval assumption, we can perform an analysis using `INDExA`
 function:
@@ -63,7 +65,7 @@ data(data_sim_1)
 # 0 represents untreated samples and 1 represents treated samples
 conds <- c(rep(0, 50), rep(1, 50))
 # Our interval assumption about the change in total microbial load
-epsilon.interval <- c(0, 1.233)
+epsilon.interval <- c(0, 1.322)
 # Build INDExA Object from MC Sampling
 indexa.obj <- indexa.mc(data_sim_1$seq_counts, mc.samples=500)
 # Run Interval Null Hypothesis Testing

@@ -34,17 +34,19 @@ the remaining 20 microbes were simulated with LFC of 0.
 
 Consider, based on prior knowledge, we believe the selective microbial growth
 factor could only increase the total number of microbes in the colons of
-**treated** vs. **untreated** individuals by at most 3 fold (and at least 1
+**treated** vs. **untreated** individuals by at most 2.5 fold (and at least 1
 fold). If we represent the $log_2$ fold change in total colonic microbial
 abundance as the variable $\theta^\perp$, we can represent this (correct)
 interval assumption as:
+
 $$
 \begin{align*}
-  \theta^\perp &\in [\log_2(1), \log_2(3)] \\
-  \theta^\perp &\in [0, 1.585].
+  \theta^\perp &\in [\log_2(1), \log_2(2.5)] \\
+  \theta^\perp &\in [0, 1.322].
 \end{align*}
 $$
-(**NOTE:** In this sim the true $\theta^\perp=1.12$)
+
+(**NOTE:** In this sim the true $\theta^\perp=1.195$)
 
 Using this interval assumption, we can perform an analysis using `INDExA`
 function:
@@ -54,7 +56,7 @@ data(data_sim_1)
 # 0 represents untreated samples and 1 represents treated samples
 conds <- c(rep(0, 50), rep(1, 50))
 # Our interval assumption about the change in total microbial load
-epsilon.interval <- c(0, 1.233)
+epsilon.interval <- c(0, 1.322)
 # Build INDExA Object from MC Sampling
 indexa.obj <- indexa.mc(data_sim_1$seq_counts, mc.samples=500)
 # Run Interval Null Hypothesis Testing
@@ -67,7 +69,7 @@ indexa.sim.results <- indexa.test(indexa.obj, conds,
 We will compare our output to the results of `ALDEx2` using CLR normalization.
 We use the known LFC to determine true/false positives/negatives. Remarkably,
 `INDExA` had a false positive rate of 0\% while `ALDEx2` shows a false
-positive rate of about 70\%(!!!)
+positive rate of about 95\%(!!!)
 
 ```{r,message=FALSE}
 library(ALDEx2)
